@@ -24,7 +24,7 @@ class Ekipman(models.Model):
         super().save(*args, **kwargs)
 
         # QR kod verisini oluştur
-        qr_data = f"http://127.0.0.1:8000/ekipman/{self.id}/"
+        qr_data = f"https://bakimsitesi.onrender.com/qr/{self.id}/"
         qr_img = qrcode.make(qr_data)
 
         # Görseli belleğe kaydet
