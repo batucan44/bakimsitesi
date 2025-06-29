@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamamlanan Görevler</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Tamamlanan Görevler</h1>
+    </div>
+
+    {% if gorevler %}
+        <div class="list-group">
+            {% for gorev in gorevler %}
+                <div class="list-group-item mb-3 shadow-sm">
+                    <h5 class="mb-2 text-success">{{ gorev.ekipman.adi }}</h5>
+                    <p><strong>Tamamlanma Tarihi:</strong> {{ gorev.olusturma_tarihi|date:"d.m.Y H:i" }}</p>
+                    <p><strong>Açıklama:</strong> {{ gorev.aciklama|default:"-" }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            Henüz tamamlanmış bir göreviniz yok.
+        </div>
+    {% endif %}
+    
+    <div class="text-center mt-4">
+        <a href="{% url 'teknisyen_gorevleri' %}" class="btn btn-secondary">Görevlerime Dön</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

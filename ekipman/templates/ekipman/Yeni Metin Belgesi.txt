@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Görevlerim</title>
+</head>
+<body>
+    <h1>Görevlerim</h1>
+    {% if gorevler %}
+        <ul>
+        {% for gorev in gorevler %}
+            <li>
+                <strong>{{ gorev.ekipman.adi }}</strong> -
+                {{ gorev.ekipman.bulunduğu_yer }} -
+                Durum: {{ gorev.get_durum_display }}
+                {% if gorev.durum == 'atanmis' %}
+                    <form method="post" action="{% url 'gorev_tamamla' gorev.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Tamamlandı olarak işaretle</button>
+                    </form>
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Hiç görev bulunmuyor.</p>
+    {% endif %}
+</body>
+</html>
