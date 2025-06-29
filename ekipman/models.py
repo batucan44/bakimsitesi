@@ -50,3 +50,20 @@ class Gorev(models.Model):
     )
     aciklama = models.TextField(blank=True, null=True)
     durum = models.CharField(max_length=20, choices=[
+        ('atanmis', 'Atanmış'),
+        ('tamamlandi', 'Tamamlandı'),
+    ], default='atanmis')
+    olusturma_tarihi = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.ekipman.adi} - {self.teknisyen.username} - {self.durum}"
+
+# QR SORGU KAYDI MODELİ
+class QRSorguKaydi(models.Model):
+    ekipman = models.ForeignKey(Ekipman, on_delete=models.CASCADE)
+    kullanici = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    ip_adresi = models.GenericIPAddressField()
+    sorgulama_zamani = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.ekipman.adi} - {self.kullanici or 'Anonim'} - {self.sorgulama_zamani}"
