@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.http import HttpResponse
-from .models import Ekipman, QRSorguKaydi
+from .models import Ekipman, QRSorguKaydi, Gorev  # Gorev modelini ekledik
 import openpyxl
 from openpyxl.utils import get_column_letter
 
@@ -48,3 +48,10 @@ class QRSorguKaydiAdmin(admin.ModelAdmin):
         return response
 
     export_as_excel.short_description = "Seçili sorguları Excel olarak indir"
+
+# GÖREV ATAMA İÇİN EKLEDİK
+@admin.register(Gorev)
+class GorevAdmin(admin.ModelAdmin):
+    list_display = ('ekipman', 'teknisyen', 'durum', 'olusturma_tarihi')
+    list_filter = ('durum', 'teknisyen')
+    search_fields = ('ekipman__adi', 'teknisyen__username')
