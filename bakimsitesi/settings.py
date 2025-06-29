@@ -33,6 +33,10 @@ ALLOWED_HOSTS = [
     "bakimsitesi.onrender.com",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://bakimsitesi.onrender.com",
+]
+
 
 # Application definition
 
