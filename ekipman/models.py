@@ -40,13 +40,13 @@ class Ekipman(models.Model):
         # QR kod ile birlikte kaydet
         super().save(*args, **kwargs)
 
-# GÖREV MODELİ (DÜZELTİLMİŞ)
+# GÖREV MODELİ
 class Gorev(models.Model):
     ekipman = models.ForeignKey(Ekipman, on_delete=models.CASCADE)
     teknisyen = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        limit_choices_to={'groups__name': 'Teknisyen'}  # ÖNEMLİ: sadece Teknisyen grubundakiler listelenir
+        limit_choices_to={'groups__name': 'Teknisyen'}  # sadece Teknisyen grubundakiler listelenir
     )
     aciklama = models.TextField(blank=True, null=True)
     durum = models.CharField(max_length=20, choices=[
