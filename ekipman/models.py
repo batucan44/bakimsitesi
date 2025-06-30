@@ -22,7 +22,7 @@ class Ekipman(models.Model):
         return reverse("ekipman_detay", args=[str(self.id)])
 
     def save(self, *args, **kwargs):
-        # İlk kaydı yap, ID oluşsun
+        # Önce kaydı yaparak ID'nin oluşmasını sağla
         super().save(*args, **kwargs)
 
         # QR kod verisini oluştur
@@ -32,13 +32,16 @@ class Ekipman(models.Model):
         # QR kodu belleğe kaydet
         buffer = BytesIO()
         qr_img.save(buffer, format="PNG")
+        buffer.seek(0)  # İmleci başa al, bu çok önemli!
+
         filename = f"qr_{self.id}.png"
 
-        # QR kodu modele ekle
+        # QR kodu modele ekle (save=False ile tekrar sonsuz döngüyü engelle)
         self.qr_kod.save(filename, File(buffer), save=False)
 
         # QR kod ile birlikte kaydet
         super().save(*args, **kwargs)
+
 
 # GÖREV MODELİ
 class Gorev(models.Model):
@@ -57,6 +60,7 @@ class Gorev(models.Model):
 
     def __str__(self):
         return f"{self.ekipman.adi} - {self.teknisyen.username} - {self.durum}"
+
 
 # QR SORGU KAYDI MODELİ
 class QRSorguKaydi(models.Model):
